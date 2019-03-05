@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: seat-map
+  name: seat-map
+  namespace: default
+spec:
+  ports:
+  - name: tcp
+    port: 8085
+    protocol: TCP
+    targetPort: 8085
+  selector:
+    app: seat-map
+  sessionAffinity: None
+  type: NodePort
