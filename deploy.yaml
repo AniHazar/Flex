@@ -1,0 +1,311 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: APP_NAME
+  name: APP_NAME
+  namespace: default
+spec:
+  progressDeadlineSeconds: 600
+  replicas: REPLICAS
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: APP_NAME
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: APP_NAME
+      name: APP_NAME
+    spec:
+      containers:
+      - image: REGISTRY/NAMESPACE/APP_NAME-ENV:TAG
+        imagePullPolicy: Always
+        name: seatmapcontainer
+        env:
+          - name: env.name
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: env.name
+          - name: spring.redis.host
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: spring.redis.host
+          - name: spring.redis.password
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: spring.redis.password
+          - name: spring.session.store-type 
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: spring.session.store-type
+          - name: server.servlet.session.timeout
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: server.servlet.session.timeout
+          - name: spring.session.redis.flush-mode
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: spring.session.redis.flush-mode
+          - name: spring.session.redis.namespace
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: spring.session.redis.namespace
+          - name: cts.context.actuator.host.url
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: cts.context.actuator.host.url
+          - name: check.in.service.actuator.host.url
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: check.in.service.actuator.host.url
+          - name: seat.map.service.actuator.host.url
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: seat.map.service.actuator.host.url 
+          - name: document.service.actuator.host.url
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: document.service.actuator.host.url
+          - name: payment.service.actuator.host.url
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: payment.service.actuator.host.url
+          - name: shopping.cart.service.actuator.host.url
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: shopping.cart.service.actuator.host.url
+          - name: kioskConfig.cts.HostTimeout
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.cts.HostTimeout
+          - name: kioskConfig.cts.HostHBFailureThreshold
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.cts.HostHBFailureThreshold
+          - name: kioskConfig.cts.HostHBInterval
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.cts.HostHBInterval
+          - name: kioskConfig.cts.HostHBErrInterval
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.cts.HostHBErrInterval
+          - name: kioskConfig.cts.EnableHostHB
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.cts.EnableHostHB
+          - name: kioskconfig.email.uri
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskconfig.email.uri
+          - name: kioskconfig.wsapp.uri
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskconfig.wsapp.uri
+          - name: kioskconfig.bcbp.uri
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskconfig.bcbp.uri
+          - name: kioskConfig.cts.blacklisted.boardingpass.destinations
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.cts.blacklisted.boardingpass.destinations
+          - name: kioskConfig.client.restricted.ssr
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.client.restricted.ssr
+          - name: kioskConfig.client.boardingpass.marketing.text
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.client.boardingpass.marketing.text
+          - name: kioskConfig.client.paxname.titles
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.client.paxname.titles
+          - name: kioskConfig.client.PremiereBookingClasses
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.client.PremiereBookingClasses
+          - name: kioskConfig.client.FirstBookingClasses
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.client.FirstBookingClasses
+          - name: kioskConfig.client.EconomyBookingClasses
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.client.EconomyBookingClasses
+          - name: kioskConfig.client.DefaultBookingClassEconomy
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.client.DefaultBookingClassEconomy
+          - name: kioskConfig.client.DefaultBookingClassPremiere
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.client.DefaultBookingClassPremiere
+          - name: kioskConfig.client.DefaultBookingClassFirst
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.client.DefaultBookingClassFirst
+          - name: kioskConfig.client.DefaultBookingClassResidence
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.client.DefaultBookingClassResidence
+          - name: kioskConfig.client.DelayGracePeriod
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.client.DelayGracePeriod
+          - name: kioskConfig.client.CheckinOpenTime
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.client.CheckinOpenTime
+          - name: kioskConfig.client.CheckinCloseTime
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.client.CheckinCloseTime
+          - name: kioskConfig.client.FQTVTierNameCode
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.client.FQTVTierNameCode
+          - name: kioskConfig.cts.Title
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.cts.Title
+          - name: kioskConfig.cts.FastPathRestrictBPReprintForDepartCities
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.cts.FastPathRestrictBPReprintForDepartCities
+          - name: kioskConfig.cts.PremiumFQTVPlans
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.cts.PremiumFQTVPlans
+          - name: kioskConfig.client.AirportCode
+            valueFrom:
+              configMapKeyRef:
+                name: air
+                key: kioskConfig.client.AirportCode
+          - name: kioskConfig.client.POSTableConfig
+            valueFrom:
+              configMapKeyRef:
+                name: post
+                key: kioskConfig.client.POSTableConfig
+          - name: kioskConfig.client.RestrictedSSRs
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.client.RestrictedSSRs
+          - name: kioskConfig.cts.AllowedWebCheckinOrigins
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.cts.AllowedWebCheckinOrigins
+          - name: kioskConfig.cts.WhitelistedWebBoardingPassOrigins
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.cts.WhitelistedWebBoardingPassOrigins
+          - name: kioskConfig.cts.AllowedMobileCheckinOrigins
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.cts.AllowedMobileCheckinOrigins
+          - name: kioskConfig.cts.WhitelistedMobileBoardingPassOrigins
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.cts.WhitelistedMobileBoardingPassOrigins
+          - name: kioskConfig.cts.BlacklistedWebBoardingPassDestinations
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.cts.BlacklistedWebBoardingPassDestinations
+          - name: kioskConfig.cts.BlacklistedMobileBoardingPassDestinations
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.cts.BlacklistedMobileBoardingPassDestinations
+          - name: kioskConfig.cts.SegmentBookingStatus
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.cts.SegmentBookingStatus
+          - name: kioskConfig.cts.BPAllowedSSRS
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.cts.BPAllowedSSRS
+          - name: kioskConfig.cts.EPR
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.cts.EPR
+          - name: kioskConfig.cts.PWD
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.cts.PWD
+          - name: kioskConfig.cts.sabreURL
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: kioskConfig.cts.sabreURL
+          - name: spring.redis.port
+            valueFrom:
+              configMapKeyRef:
+                name: env-test
+                key: spring.redis.port
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        ports:
+        - containerPort: 8085
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
