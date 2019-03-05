@@ -23,9 +23,9 @@ eval `/usr/local/ibmcloud/bin/ibmcloud cs cluster-config --export $cluster`
 
 #/usr/local/ibmcloud/bin/ibmcloud cr login && docker push $TAG
 
-#kubectl replace -f $deployConfigFile --validate=false
-#kubectl delete -f $deployConfigFile
-#kubectl create -f $deployConfigFile
+kubectl replace -f $deployConfigFile --validate=false
+kubectl delete -f $deployConfigFile
+kubectl create -f $deployConfigFile
 
 kubectl get pod
 kubectl get deployment
